@@ -5,7 +5,7 @@ A static classroom game hub for CP students. The main homepage links to English 
 - **Memory Game:** match eight underwater picture and word pairs.
 - **What Disappeared?:** study the pictures and identify the missing one.
 
-English game folders are ready for **Have Got Heroes** and **Spin the Wheel – Imperatives**.
+The English section is intentionally empty for now, ready for future classroom games.
 
 ## Run locally
 
