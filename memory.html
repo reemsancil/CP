@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#073e67" />
+    <meta name="description" content="A classroom-friendly memory game with eight matching pairs of underwater pictures." />
+    <title>Under the Sea Memory Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="memory.css" />
+  </head>
+  <body>
+    <div class="light-rays" aria-hidden="true"></div>
+    <div class="bubbles left" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="bubbles right" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <main class="app">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Back to the Under the Sea games homepage">
+          <span class="brand-mark" aria-hidden="true">≋</span>
+          <span>UNDER THE SEA</span>
+        </a>
+        <div class="score-pill" id="scorePill" hidden>SCORE <strong id="score">0</strong> / 8</div>
+      </header>
+
+      <section class="screen start-screen active" id="startScreen" aria-labelledby="gameTitle">
+        <div class="title-icon" aria-hidden="true">🐚</div>
+        <p class="eyebrow">CLASSROOM MEMORY GAME</p>
+        <h1 id="gameTitle">UNDER THE SEA<br /><span>MEMORY GAME</span></h1>
+        <p class="subtitle">Find the matching pairs!</p>
+        <button class="primary-button" id="startButton">START <span aria-hidden="true">→</span></button>
+        <p class="small-note">Match two of the same underwater pictures</p>
+      </section>
+
+      <section class="screen game-screen" id="gameScreen" aria-labelledby="gameHeading">
+        <div class="game-heading">
+          <div><p class="eyebrow">PICTURE PAIRS</p><h2 id="gameHeading">Find the matching pairs!</h2></div>
+          <p class="pairs-count"><strong id="pairsCount">0</strong> of 8 pairs</p>
+        </div>
+        <div class="status" id="status" aria-live="polite">Choose a card</div>
+        <div class="cards-grid" id="cardsGrid" aria-label="Memory card grid"></div>
+      </section>
+
+      <section class="screen end-screen" id="endScreen" aria-labelledby="endTitle">
+        <div class="medal" aria-hidden="true">★</div>
+        <p class="eyebrow">ALL PAIRS MATCHED</p>
+        <h2 id="endTitle">Excellent!</h2>
+        <p>You found all the pairs!</p>
+        <div class="final-score"><span>SCORE</span><strong>8 / 8</strong></div>
+        <button class="primary-button" id="playAgainButton">PLAY AGAIN <span aria-hidden="true">↻</span></button>
+      </section>
+    </main>
+
+    <div class="seabed" aria-hidden="true"><span class="seaweed one">♒</span><span class="coral">Y</span><span class="starfish">★</span><span class="seaweed two">♒</span></div>
+    <script src="memory.js"></script>
+  </body>
+</html>
