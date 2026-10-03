@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#063b68" />
+    <meta name="description" content="What Disappeared? An under-the-sea classroom memory game." />
+    <title>What Disappeared? — Under the Sea</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ocean-light" aria-hidden="true"></div>
+    <div class="bubbles bubbles-left" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="bubbles bubbles-right" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <main class="app" id="app">
+      <header class="topbar">
+        <div class="brand" aria-label="Under the Sea">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 51c9-1 5-15 13-22-1 10 5 14 4 22M30 51c1-14-7-25 2-38 8 13-1 23 4 38M41 51c-2-12 9-18 8-31 9 13 1 23 2 31"/></svg>
+          <span>UNDER THE SEA</span>
+        </div>
+        <div class="score-pill" id="scorePill" hidden aria-live="polite">SCORE <strong id="score">0</strong> / 8</div>
+      </header>
+
+      <section class="screen start-screen active" id="startScreen" aria-labelledby="gameTitle">
+        <div class="hero-fish" aria-hidden="true">✦</div>
+        <p class="eyebrow">MEMORY GAME</p>
+        <h1 id="gameTitle">WHAT<br /><span>DISAPPEARED?</span></h1>
+        <p class="subtitle">Look carefully and remember the pictures!</p>
+        <button class="primary-button" id="startButton">START <span aria-hidden="true">→</span></button>
+        <p class="round-note">8 underwater rounds</p>
+      </section>
+
+      <section class="screen game-screen" id="gameScreen" aria-labelledby="instruction">
+        <div class="round-row">
+          <p id="roundLabel">ROUND 1 OF 8</p>
+          <div class="progress" aria-label="Game progress"><span id="progressBar"></span></div>
+        </div>
+        <h2 id="instruction" aria-live="assertive">Look carefully!</h2>
+        <div class="cards-grid" id="cardsGrid" aria-label="Underwater pictures"></div>
+        <div class="answers" id="answers" hidden aria-label="Choose what disappeared"></div>
+        <p class="feedback" id="feedback" aria-live="assertive"></p>
+        <button class="primary-button next-button" id="nextButton" hidden>NEXT ROUND <span aria-hidden="true">→</span></button>
+      </section>
+
+      <section class="screen end-screen" id="endScreen" aria-labelledby="endTitle">
+        <div class="medal" aria-hidden="true">★</div>
+        <p class="eyebrow">ALL 8 ROUNDS COMPLETE</p>
+        <h2 id="endTitle">Excellent!</h2>
+        <p>You remembered the<br /><strong>underwater world!</strong></p>
+        <div class="final-score"><span>YOUR SCORE</span><strong id="finalScore">8 / 8</strong></div>
+        <button class="primary-button" id="playAgainButton">PLAY AGAIN <span aria-hidden="true">↻</span></button>
+      </section>
+    </main>
+
+    <div class="seabed" aria-hidden="true">
+      <span class="plant p1"></span><span class="plant p2"></span><span class="plant p3"></span>
+      <span class="coral-decoration">Y</span><span class="starfish">★</span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
