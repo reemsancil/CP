@@ -3,64 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#063b68" />
-    <meta name="description" content="What Disappeared? An under-the-sea classroom memory game." />
-    <title>What Disappeared? — Under the Sea</title>
+    <meta name="theme-color" content="#073e68" />
+    <meta name="description" content="Reem's CP Games — fun learning games for the classroom." />
+    <title>Reem's CP Games</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="ocean-light" aria-hidden="true"></div>
-    <div class="bubbles bubbles-left" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="bubbles bubbles-right" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="light-rays" aria-hidden="true"></div>
+    <div class="bubble-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="Reem's CP Games home">
+        <span class="logo-mark" aria-hidden="true"><span>R</span></span>
+        <span>REEM'S <strong>CP GAMES</strong></span>
+      </a>
+      <span class="classroom-label">CLASSROOM COLLECTION</span>
+    </header>
 
-    <main class="app" id="app">
-      <header class="topbar">
-        <div class="brand" aria-label="Under the Sea">
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 51c9-1 5-15 13-22-1 10 5 14 4 22M30 51c1-14-7-25 2-38 8 13-1 23 4 38M41 51c-2-12 9-18 8-31 9 13 1 23 2 31"/></svg>
-          <span>UNDER THE SEA</span>
-        </div>
-        <div class="score-pill" id="scorePill" hidden aria-live="polite">SCORE <strong id="score">0</strong> / 8</div>
-      </header>
-
-      <section class="screen start-screen active" id="startScreen" aria-labelledby="gameTitle">
-        <div class="hero-fish" aria-hidden="true">✦</div>
-        <p class="eyebrow">MEMORY GAME</p>
-        <h1 id="gameTitle">WHAT<br /><span>DISAPPEARED?</span></h1>
-        <p class="subtitle">Look carefully and remember the pictures!</p>
-        <button class="primary-button" id="startButton">START <span aria-hidden="true">→</span></button>
-        <p class="round-note">8 underwater rounds</p>
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow"><span></span> PICK A GAME <span></span></p>
+        <h1 id="page-title">Reem's <em>CP Games</em></h1>
+        <p class="subtitle">Fun learning games for kids</p>
+        <p class="intro">Choose an activity below and get ready to learn, remember, and play together.</p>
       </section>
 
-      <section class="screen game-screen" id="gameScreen" aria-labelledby="instruction">
-        <div class="round-row">
-          <p id="roundLabel">ROUND 1 OF 8</p>
-          <div class="progress" aria-label="Game progress"><span id="progressBar"></span></div>
-        </div>
-        <h2 id="instruction" aria-live="assertive">Look carefully!</h2>
-        <div class="cards-grid" id="cardsGrid" aria-label="Underwater pictures"></div>
-        <div class="answers" id="answers" hidden aria-label="Choose what disappeared"></div>
-        <p class="feedback" id="feedback" aria-live="assertive"></p>
-        <button class="primary-button next-button" id="nextButton" hidden>NEXT ROUND <span aria-hidden="true">→</span></button>
-      </section>
+      <section class="games" aria-label="Available games">
+        <a class="game-card coral-card" href="games/what-disappeared/">
+          <div class="card-art" aria-hidden="true">
+            <span class="bubbles">○　◦</span>
+            <svg viewBox="0 0 260 180"><path class="fish-tail" d="M190 91l54-42-12 43 12 42-54-38z"/><path class="fish-body" d="M28 91c23-60 125-61 177 0-52 61-154 60-177 0z"/><path d="M99 40l33-30 26 40M99 140l33 30 26-40" class="fish-fin"/><circle cx="72" cy="76" r="8"/><circle cx="69" cy="73" r="3" fill="white"/><path d="M103 41q-22 48 0 100M142 35q-22 56 0 112" fill="none" stroke="#fff3c7" stroke-width="7" opacity=".8"/></svg>
+          </div>
+          <div class="card-copy">
+            <span class="game-number">GAME 01</span>
+            <h2>What<br />Disappeared?</h2>
+            <p>Look closely, remember the pictures, and spot what's missing.</p>
+            <span class="play-button">PLAY GAME <b aria-hidden="true">→</b></span>
+          </div>
+        </a>
 
-      <section class="screen end-screen" id="endScreen" aria-labelledby="endTitle">
-        <div class="medal" aria-hidden="true">★</div>
-        <p class="eyebrow">ALL 8 ROUNDS COMPLETE</p>
-        <h2 id="endTitle">Excellent!</h2>
-        <p>You remembered the<br /><strong>underwater world!</strong></p>
-        <div class="final-score"><span>YOUR SCORE</span><strong id="finalScore">8 / 8</strong></div>
-        <button class="primary-button" id="playAgainButton">PLAY AGAIN <span aria-hidden="true">↻</span></button>
+        <a class="game-card yellow-card" href="games/under-the-sea-memory/">
+          <div class="card-art shell-art" aria-hidden="true">
+            <span class="bubbles">◦　○</span>
+            <svg viewBox="0 0 260 180"><path d="M49 148C35 67 68 21 130 21s95 46 81 127c-38 22-124 22-162 0z" class="shell"/><path d="M130 23v132M127 25C89 62 88 106 97 153M121 28C63 55 55 101 66 144M139 28c58 27 66 73 55 116M133 25c38 37 39 81 30 128" fill="none" stroke="#d58277" stroke-width="7" opacity=".65"/></svg>
+          </div>
+          <div class="card-copy">
+            <span class="game-number">GAME 02</span>
+            <h2>Under the Sea<br />Memory Game</h2>
+            <p>Turn over the cards and match every underwater pair.</p>
+            <span class="play-button">PLAY GAME <b aria-hidden="true">→</b></span>
+          </div>
+        </a>
       </section>
     </main>
 
-    <div class="seabed" aria-hidden="true">
-      <span class="plant p1"></span><span class="plant p2"></span><span class="plant p3"></span>
-      <span class="coral-decoration">Y</span><span class="starfish">★</span>
-    </div>
-
-    <script src="script.js"></script>
+    <footer><span>✦</span> More classroom games coming soon <span>✦</span></footer>
+    <div class="seabed" aria-hidden="true"><i></i><b>★</b><em>Y</em></div>
   </body>
 </html>
