@@ -1,18 +1,16 @@
-# Under the Sea Classroom Games
+# CP Games
 
-A pair of classroom-friendly memory games for CP students:
+A static classroom game hub for CP students. The main homepage links to English games and other classroom projects. The **Under the Sea** project preserves both existing games:
 
-- **Under the Sea Memory Game:** turn over 16 cards and match eight pairs of identical underwater pictures.
-- **What Disappeared?:** study the underwater pictures and identify which one is missing.
+- **Memory Game:** match eight underwater picture and word pairs.
+- **What Disappeared?:** study the pictures and identify the missing one.
 
-Both games are available from the shared homepage.
+English game folders are ready for **Have Got Heroes** and **Spin the Wheel – Imperatives**.
 
 ## Run locally
-
-Open `index.html` directly, or serve the folder with a static web server:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`. The project has no build step or external runtime dependencies and is ready to upload to Netlify as a static site.
+Visit `http://localhost:8000`. There is no build step, and all navigation uses deployment-safe relative links for static hosting on Netlify.
