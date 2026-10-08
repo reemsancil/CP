@@ -1,35 +1,13 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#5646b8" />
-  <meta name="description" content="CP Games: classroom games for English, projects, and more." />
-  <title>CP Games | Classroom Game Hub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="hub.css" />
-</head>
-<body class="home-page">
-  <nav class="top-nav" aria-label="Main navigation"><a class="logo" href="./"><span>CP</span> Games</a><a class="nav-home active" href="./">Home</a></nav>
-  <main class="hub">
-    <header class="hero">
-      <p class="eyebrow">WELCOME TO OUR CLASSROOM</p>
-      <h1>Let’s learn by <span>playing!</span></h1>
-      <p>Choose a category and start a game together.</p>
-    </header>
-    <nav class="category-grid" aria-label="Game categories">
-      <a class="category-card english" href="english/">
-        <span class="card-art" aria-hidden="true"><span class="book">A<span>B</span>C</span></span>
-        <span class="card-content"><span class="number">01</span><strong>ENGLISH</strong><small>English learning games</small><span class="open">Explore games <b>→</b></span></span>
-      </a>
-      <a class="category-card others" href="others/">
-        <span class="card-art" aria-hidden="true"><span class="shapes">◆ <i>●</i> <b>▲</b></span></span>
-        <span class="card-content"><span class="number">02</span><strong>OTHERS</strong><small>Projects and other classroom games</small><span class="open">Explore projects <b>→</b></span></span>
-      </a>
-    </nav>
-  </main>
-  <footer>Pick a card to begin • Made for our classroom</footer>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#6655c7"><title>CP Games | Learn by playing</title><link rel="stylesheet" href="hub.css"><script src="games.js" defer></script></head>
+<body><nav class="top-nav" aria-label="Main navigation"><a class="logo" href="./"><span>CP</span> Games</a><a class="nav-home active" href="./">Home</a></nav>
+<main class="hub"><header class="hero"><p class="eyebrow">WELCOME TO OUR CLASSROOM</p><h1>Let’s learn by <span>playing!</span></h1><p>Pick a game. Tap, match, and smile!</p></header>
+<p class="practice-note">School supplies · Daily routine · This is / These are<br>English words + French help · Mots anglais + aide en français</p>
+<section class="game-grid" aria-label="All games">
+<button class="game-card memory" data-game="memory"><span class="art" aria-hidden="true">🃏</span><span class="tag">FLIP &amp; FIND</span><strong>Memory cards</strong><span>Find 4 pairs of matching pictures.</span><b>Let’s play →</b></button>
+<button class="game-card matching" data-game="matching"><span class="art" aria-hidden="true">🧩</span><span class="tag">LOOK &amp; MATCH</span><strong>Picture matching</strong><span>Match each picture to its word.</span><b>Let’s play →</b></button>
+<button class="game-card missing" data-game="missing"><span class="art" aria-hidden="true">🔍</span><span class="tag">LOOK &amp; REMEMBER</span><strong>What’s missing?</strong><span>Remember the pictures. Find the missing one!</span><b>Let’s play →</b></button>
+<button class="game-card grammar" data-game="grammar"><span class="art" aria-hidden="true">✏️ ✏️</span><span class="tag">ONE OR MORE?</span><strong>This is / These are</strong><span>Choose a sentence for one or several objects.</span><b>Let’s play →</b></button>
+</section><details class="parent-help"><summary>For parents: English + French word guide / Guide des mots</summary><p>Read the English words together. French translations help explain the meaning. / Lisez les mots anglais ensemble. Les traductions françaises aident à comprendre.</p><div id="vocabulary"></div></details></main><footer>No timer • Try again as often as you like • Learn together</footer>
+<dialog id="gameDialog" aria-labelledby="gameTitle"><div class="dialog-top"><span class="logo">Let’s play!</span><button id="closeGame" aria-label="Close game">✕</button></div><h2 id="gameTitle"></h2><p id="instructions"></p><label id="lessonControl" for="lesson">Choose a lesson / Choisis une leçon <select id="lesson"><option value="supplies">School supplies / Matériel scolaire</option><option value="routine">Daily routine / Routine quotidienne</option></select></label><div id="board"></div><p id="feedback" role="status" aria-live="polite"></p><div class="actions"><button id="nextRound" hidden>Hide a picture →</button><button id="restart">Start again ↻</button></div></dialog>
+</body></html>
