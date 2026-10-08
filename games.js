@@ -1,34 +1,62 @@
 const lessons = {
-  supplies: {label:'School supplies · Le matériel scolaire', items:[
-    ['pen','un stylo','🖊️'],['ruler','une règle','📏'],['sharpener','un taille-crayon','▰'],['school bag','un cartable','🎒'],['coloring pencil','un crayon de couleur','🖍️'],['folder','une chemise','📁'],['pencil','un crayon','✏️'],['eraser','une gomme','▱'],['glue stick','un bâton de colle','🧴'],['pencil case','une trousse','👝'],['crayon','un crayon de cire','🖍️'],['scissors','des ciseaux','✂️']]},
-  routine: {label:'Daily routine · La routine quotidienne', items:[
-    ['I wake up.','Je me réveille.','🌅'],['I wash my face.','Je me lave le visage.','💧'],['I brush my teeth.','Je me brosse les dents.','🪥'],['I get dressed.','Je m’habille.','👕'],['I have breakfast.','Je prends mon petit déjeuner.','🥣'],['I go to school.','Je vais à l’école.','🏫'],['I come back home.','Je rentre à la maison.','🏠'],['I have lunch.','Je déjeune.','🥪'],['I do my homework.','Je fais mes devoirs.','📚'],['I play with my friends.','Je joue avec mes amis.','⚽'],['I take a shower.','Je prends une douche.','🚿'],['I have dinner.','Je dîne.','🍽️'],['I go to bed.','Je vais au lit.','🛏️'],['I comb my hair.','Je me peigne les cheveux.','💇']]}
+  supplies: {label:'School supplies', items:[
+    ['pen','🖊️'],['ruler','📏'],['sharpener','▰'],['school bag','🎒'],['coloring pencil','🖍️'],['folder','📁'],['pencil','✏️'],['eraser','▱'],['glue stick','🧴'],['pencil case','👝'],['crayon','🖍️'],['scissors','✂️']]},
+  routine: {label:'My daily routine', items:[
+    ['I wake up.','🌅'],['I wash my face.','💧'],['I brush my teeth.','🪥'],['I get dressed.','👕'],['I have breakfast.','🥣'],['I go to school.','🏫'],['I come back home.','🏠'],['I have lunch.','🥪'],['I do my homework.','📚'],['I play with my friends.','⚽'],['I take a shower.','🚿'],['I have dinner.','🍽️'],['I go to bed.','🛏️'],['I comb my hair.','💇']]}
 };
 const dialog=document.querySelector('#gameDialog'),board=document.querySelector('#board'),feedback=document.querySelector('#feedback'),next=document.querySelector('#nextRound');
-let mode,items,selection=[],matched=0,locked=false,timer,round=0,missing,phase;
+let attempts=0,firstTry=0,roundWrong=false,completed=false;
+let mode,lessonKey,items,selection=[],matched=0,locked=false,timer,round=0,missing,phase;
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function tile(html,action,cls=''){const b=document.createElement('button');b.type='button';b.className='tile '+cls;b.innerHTML=html;b.addEventListener('click',()=>action(b));board.append(b);return b;}
-function picture(item){return `<span class="symbol" aria-hidden="true">${item[2]}</span><span class="picture-word">${item[0]}</span><small lang="fr">${item[1]}</small>`;}
-function start(){clearTimeout(timer);selection=[];matched=0;locked=false;round=0;feedback.textContent='';board.replaceChildren();next.hidden=true;
- const key=document.querySelector('#lesson').value;items=shuffle(lessons[key].items).slice(0,4);
- document.querySelector('#gameTitle').textContent={memory:'Memory cards · Les paires',matching:'Picture matching · Associe les cartes',missing:'What’s missing? · Que manque-t-il ?',grammar:'This is / These are'}[mode];
- document.querySelector('#instructions').textContent={memory:'Flip two cards to find a pair. / Retourne deux cartes pour trouver une paire.',matching:'Tap a picture, then its English word. / Choisis une image, puis son mot anglais.',missing:'Look at the pictures. When you’re ready, hide one! / Observe les images, puis cache une image.',grammar:'Choose the sentence for one or several objects. / Choisis la phrase pour un ou plusieurs objets.'}[mode];
+function picture(item){return `<span class="symbol" aria-hidden="true">${item[1]}</span><span class="picture-word">${item[0]}</span>`;}
+function start(){attempts=0;firstTry=0;roundWrong=false;completed=false;CompletionResult.reset();document.querySelector("#instructions").hidden=false;clearTimeout(timer);selection=[];matched=0;locked=false;round=0;feedback.textContent='';board.replaceChildren();next.hidden=true;
+ const key=lessonKey;items=shuffle(lessons[key].items).slice(0,4);
+ document.querySelector('#gameTitle').textContent=mode==='grammar'?'There is / There are':lessons[key].label;
+ document.querySelector('#instructions').textContent={memory:'Flip two cards to find a pair.',matching:'Tap a picture, then its English word.',missing:'Look at the pictures. When you’re ready, hide one!',grammar:'Choose the sentence for one or several objects.'}[mode];
  if(mode==='memory'||mode==='matching')pairs();else if(mode==='missing')look();else grammar();
 }
 function pairs(){let deck=shuffle(items.flatMap((item,id)=>[{item,id,kind:'picture'},{item,id,kind:mode==='memory'?'picture':'word'}]));
- for(const card of deck){const face=card.kind==='picture'?picture(card.item):`<span>${card.item[0]}</span><small lang="fr">${card.item[1]}</small>`;
- const b=tile(mode==='memory'?'★':face,()=>choose(b,card,face),card.kind==='word'?'word':'');b.setAttribute('aria-label',mode==='memory'?'Hidden card / Carte cachée':card.item[0]);}
+ for(const card of deck){const face=card.kind==='picture'?picture(card.item):`<span>${card.item[0]}</span>`;
+ const b=tile(mode==='memory'?'★':face,()=>choose(b,card,face),card.kind==='word'?'word':'');b.setAttribute('aria-label',mode==='memory'?'Hidden card':card.item[0]);}
 }
 function choose(b,card,face){if(locked||b.disabled||selection.some(s=>s.b===b))return;
  if(mode==='matching'&&selection.length&&selection[0].card.kind===card.kind){selection[0].b.classList.remove('selected');selection=[];}
- b.innerHTML=face;b.setAttribute('aria-label',card.item[0]);b.classList.add('selected');selection.push({b,card});if(selection.length<2)return;
- if(selection[0].card.id===card.id){selection.forEach(s=>{s.b.classList.remove('selected');s.b.classList.add('matched');s.b.disabled=true;});selection=[];matched++;feedback.textContent=matched===4?'🌟 All pairs found! Bravo, toutes les paires !':'Great match! / Bien joué !';}
- else{locked=true;feedback.textContent='Try again! / Essaie encore !';timer=setTimeout(()=>{selection.forEach(s=>{s.b.classList.remove('selected');if(mode==='memory'){s.b.textContent='★';s.b.setAttribute('aria-label','Hidden card / Carte cachée');}});selection=[];locked=false;},1300);}}
-function look(){board.replaceChildren();feedback.textContent='';phase='look';items.forEach(i=>tile(picture(i),()=>{}).disabled=true);next.textContent='Hide a picture / Cache une image →';next.hidden=false;}
-function hide(){missing=items[round];board.replaceChildren();items.forEach(i=>tile(i===missing?'❔':picture(i),()=>{}).disabled=true);const choices=document.createElement('div');choices.className='answer-row';board.append(choices);shuffle(items).forEach(i=>{const b=document.createElement('button');b.className='answer';b.innerHTML=`${i[0]}<small lang="fr">${i[1]}</small>`;choices.append(b);b.onclick=()=>{if(i!==missing){feedback.textContent='Try again! / Essaie encore !';return;}choices.querySelectorAll('button').forEach(x=>x.disabled=true);feedback.textContent=`🌟 ${missing[0]} — ${missing[1]}!`;phase='solved';next.textContent=round===3?'Play again / Rejouer ↻':'Next round / Image suivante →';next.hidden=false;};});phase='guess';next.hidden=true;}
-const grammarItems=[['pencil','pencils','crayon','crayons','✏️',1],['ruler','rulers','règle','règles','📏',2],['sharpener','sharpeners','taille-crayon','taille-crayons','▰',4],['pencil','pencils','crayon','crayons','✏️',3]];
-function grammar(){board.replaceChildren();next.hidden=true;const [one,many,frOne,frMany,icon,n]=grammarItems[round];const prompt=document.createElement('div');prompt.className='grammar-prompt';prompt.innerHTML=`<div aria-hidden="true">${Array(n).fill(icon).join(' ')}</div><p>${n} ${n===1?one:many} · <span lang="fr">${n} ${n===1?frOne:frMany}</span></p>`;board.append(prompt);['This is','These are'].forEach(choice=>{const ending=n===1?`a ${one}.`:`${n} ${many}.`;tile(`${choice} ${ending}`,b=>{if(choice!==(n===1?'This is':'These are')){feedback.textContent='Try again! One: This is. Several: These are. / Un : This is. Plusieurs : These are.';return;}board.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('matched');feedback.textContent=n===1?`Bravo ! C’est un ${frOne}.`:`Bravo ! Ce sont ${n} ${frMany}.`;phase='grammar';next.hidden=false;next.textContent=round===3?'Play again / Rejouer ↻':'Next / Suivant →';},'word');});}
+ b.innerHTML=face;b.setAttribute('aria-label',card.item[0]);b.classList.add('selected');selection.push({b,card});if(selection.length<2)return;attempts++;
+ if(selection[0].card.id===card.id){selection.forEach(s=>{s.b.classList.remove('selected');s.b.classList.add('matched');s.b.disabled=true;});selection=[];matched++;feedback.textContent=matched===4?'🌟 All pairs found! Well done!':'Great match!';if(matched===4)finish();}
+ else{locked=true;feedback.textContent='Try again!';timer=setTimeout(()=>{selection.forEach(s=>{s.b.classList.remove('selected');if(mode==='memory'){s.b.textContent='★';s.b.setAttribute('aria-label','Hidden card');}});selection=[];locked=false;},1300);}}
+function look(){roundWrong=false;board.replaceChildren();feedback.textContent='';phase='look';items.forEach(i=>tile(picture(i),()=>{}).disabled=true);next.textContent='Hide a picture →';next.hidden=false;}
+function hide(){missing=items[round];board.replaceChildren();items.forEach(i=>tile(i===missing?'❔':picture(i),()=>{}).disabled=true);const choices=document.createElement('div');choices.className='answer-row';board.append(choices);shuffle(items).forEach(i=>{const b=document.createElement('button');b.className='answer';b.innerHTML=`${i[0]}`;choices.append(b);b.onclick=()=>{attempts++;if(i!==missing){roundWrong=true;feedback.textContent='Try again!';return;}if(!roundWrong)firstTry++;choices.querySelectorAll('button').forEach(x=>x.disabled=true);feedback.textContent=`🌟 ${missing[0]}!`;phase='solved';if(round===3){finish();return;}next.textContent='Next round →';next.hidden=false;};});phase='guess';next.hidden=true;}
+const grammarItems=[['pencil','pencils','✏️',1],['ruler','rulers','📏',2],['sharpener','sharpeners','▰',4],['pencil','pencils','✏️',3]];
+function grammar(){
+ roundWrong=false;board.replaceChildren();next.hidden=true;
+ const [one,many,icon,n]=grammarItems[round];
+ const prompt=document.createElement('div');prompt.className='grammar-prompt';
+ prompt.innerHTML=`<div aria-hidden="true">${Array(n).fill(icon).join(' ')}</div><p>${n} ${n===1?one:many}</p>`;board.append(prompt);
+ ['There is','There are'].forEach(choice=>{
+  const ending=n===1?`a ${one}.`:`${n} ${many}.`;
+  tile(`${choice} ${ending}`,b=>{
+   attempts++;if(choice!==(n===1?'There is':'There are')){roundWrong=true;feedback.textContent='Try again! One object: There is. More than one: There are.';return;}
+   if(!roundWrong)firstTry++;board.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('matched');
+   feedback.textContent=`🌟 ${choice} ${ending}`;phase='grammar';next.hidden=false;
+   if(round===3){finish();return;}next.textContent='Next →';
+  },'word');
+ });
+}
 next.onclick=()=>{if(mode==='grammar'){if(round===3)start();else{round++;feedback.textContent='';grammar();}}else if(phase==='look')hide();else{if(round===3)start();else{round++;look();}}};
-document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{mode=b.dataset.game;document.querySelector('#lessonControl').hidden=mode==='grammar';start();dialog.showModal();});
-document.querySelector('#closeGame').onclick=()=>dialog.close();dialog.addEventListener('close',()=>clearTimeout(timer));document.querySelector('#restart').onclick=start;document.querySelector('#lesson').onchange=start;
-const vocab=document.querySelector('#vocabulary');Object.values(lessons).forEach(lesson=>{const section=document.createElement('section');const title=document.createElement('h3');title.textContent=lesson.label;section.append(title);const list=document.createElement('dl');lesson.items.forEach(([en,fr,icon])=>{const row=document.createElement('div');const dt=document.createElement('dt');dt.textContent=`${icon} ${en}`;const dd=document.createElement('dd');dd.lang='fr';dd.textContent=fr;row.append(dt,dd);list.append(row);});section.append(list);vocab.append(section);});
+document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{mode=b.dataset.game;lessonKey=b.dataset.lesson||'supplies';start();dialog.showModal();});
+document.querySelector('#closeGame').onclick=()=>dialog.close();dialog.addEventListener('close',()=>{clearTimeout(timer);CompletionResult.reset();});document.querySelector('#restart').onclick=start;const vocab=document.querySelector('#vocabulary');
+Object.values(lessons).forEach(lesson=>{
+ const section=document.createElement('section');const title=document.createElement('h3');title.textContent=lesson.label;section.append(title);
+ const list=document.createElement('ul');list.className='word-guide';
+ lesson.items.forEach(([en,icon])=>{const row=document.createElement('li');row.textContent=`${icon} ${en}`;list.append(row);});
+ section.append(list);vocab.append(section);
+});
+
+function finish(){
+ completed=true;next.hidden=true;document.querySelector('#instructions').hidden=true;
+ const summary=mode==='memory'?`You found all 4 pairs in ${attempts} turns.`:mode==='matching'?`You matched all 4 pairs in ${attempts} attempts.`:`You completed all 4 rounds. First-try answers: ${firstTry} / 4.`;
+ document.querySelector('#resultSummary').textContent=summary;
+ CompletionResult.show(document.querySelector('#gameTitle').textContent,{memory:'Picture pairs',matching:'Match the words',missing:'What’s missing?',grammar:'Choose the sentence'}[mode],4,4);
+ document.querySelector('#studentName').focus();
+}
