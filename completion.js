@@ -16,5 +16,5 @@ window.CompletionResult = (() => {
   finally{if(pending===run)pending=null;}
  });
  form.elements.student_name.addEventListener('input',()=>form.elements.student_name.setCustomValidity(''));
- return {reset,show(game,exercise,score,total){reset();completion={id:crypto.randomUUID(),game,exercise,score,total};form.hidden=false;}};
+ return {reset,show(game,exercise,score,total){GameProgress.save(game,exercise,score,total);reset();completion={id:crypto.randomUUID(),game,exercise,score,total};form.hidden=false;}};
 })();

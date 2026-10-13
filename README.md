@@ -17,3 +17,5 @@ Children can use Check my gifts or My certificates with their name and CP sectio
 Before publishing this feature, run school-certificates.sql in the existing Supabase SQL editor. It adds a certificate table and three scoped RPCs without changing student_results. The teacher account alone can award certificates, and eligibility is checked again in the database. Existing anonymous result reading remains restricted. Children can look up and open only certificates matching the supplied name, class and level. Student gift lookups have no directory/list endpoint. Live database setup and browser verification still need to be completed.
 
 See GIFTS-SETUP.md for the shared CP, CE2 and CM1 certificate setup and the standalone test instructions.
+
+Game completion checkmarks are remembered in this browser after an exercise finishes, including low scores and retries. Completing every exercise marks its lesson and Unit 1. These local checkmarks do not award gifts or replace submitted teacher records.
