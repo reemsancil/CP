@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#6655c7"><title>Mrs. Reem’s English class | CP Games</title><style> :root{--ink:#252352;--purple:#6655c7;--yellow:#ffd55b}*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:Nunito,system-ui,sans-serif;background:radial-gradient(circle at 5% 18%,#fff0be 0 7%,transparent 7.2%),radial-gradient(circle at 94% 90%,#d9f3e9 0 10%,transparent 10.2%),#f8f5ee}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:4px solid #6655c7;outline-offset:5px}.top-nav{width:min(1180px,92vw);height:88px;margin:auto;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;align-items:center;gap:11px;color:var(--ink);font-size:1.25rem;font-weight:900;text-decoration:none}.logo span{display:grid;place-items:center;width:45px;height:45px;border-radius:14px;color:white;background:var(--purple);box-shadow:0 4px 0 #443799}.nav-home{padding:10px 18px;color:var(--purple);background:#ebe6ff;text-decoration:none;font-weight:800;border-radius:12px}.hub{width:min(1120px,92vw);margin:auto;padding:45px 0 55px}.hero{text-align:center}.eyebrow{text-transform:none;color:var(--purple);font-size:clamp(1.1rem,2.4vw,1.6rem);font-weight:900;letter-spacing:.06em}.hero h1{margin:15px 0;font-size:clamp(2.5rem,6vw,5rem);line-height:1.1;letter-spacing:.015em}.hero h1 span{color:#df6d42}.hero{margin-bottom:35px}.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.game-card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:14px;padding:30px;border:3px solid white;border-radius:28px;color:var(--ink);box-shadow:0 9px 0 #ded9ce;transition:transform .18s}.game-card:hover{transform:translateY(-5px)}.memory{background:#eeeaff}.matching{background:#def4ed}.missing{background:#fff0cf}.art{font-size:3.5rem;align-self:center;padding:12px}.tag{font-size:.68rem;font-weight:900;letter-spacing:.14em}.game-card strong{font-size:1.65rem}.game-card>span:not(.art):not(.tag){line-height:1.5;color:#625e79}.game-card b{margin-top:auto;padding-top:12px;color:#5143a8}footer{text-align:center;padding:15px 20px 30px;color:#706d84;font-size:.85rem}dialog{width:min(760px,94vw);max-height:92vh;overflow:auto;border:0;border-radius:26px;padding:28px;background:#fffaf1;color:var(--ink);box-shadow:0 20px 80px #25235244}dialog::backdrop{background:#25235299}.dialog-top{display:flex;justify-content:space-between;align-items:center}#closeGame{border:0;border-radius:50%;width:44px;height:44px;background:#eeeaff;color:var(--ink)}h2{font-size:2rem;margin-bottom:8px}#instructions{line-height:1.5}#board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}.tile{min-height:105px;border:2px solid #d8d0ef;border-radius:17px;background:white;color:var(--ink);font-size:2.5rem;font-weight:800}.tile.word{font-size:1.1rem}.tile.selected{background:#fff0be;border-color:#b37b00}.tile.matched{background:#d6f3e1;border-color:#41835c;opacity:1}.tile:disabled{cursor:default;color:var(--ink)}#feedback{min-height:28px;font-weight:800;color:#5143a8}.actions{display:flex;gap:12px;flex-wrap:wrap}.actions button{padding:13px 20px;background:var(--purple);color:white;border:0;border-radius:12px;font-weight:800}[hidden]{display:none!important}@media(max-width:760px){.game-grid{grid-template-columns:1fr}.game-card{gap:9px}.art{align-self:flex-start}.hub{padding-top:20px}}@media(max-width:430px){dialog{padding:20px}#board{gap:8px}.tile{min-height:80px;font-size:2rem}.tile.word{font-size:.9rem}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.grammar{background:#ffe4dc}.game-grid{grid-template-columns:repeat(2,1fr)}.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px}.symbol{font-size:2.3rem}.picture-word{font-size:.95rem}.tile small,.answer small{display:block;font-size:.78rem;font-weight:500;line-height:1.3;color:#625e79}.word span{font-size:1rem}select{display:block;max-width:100%;padding:12px;margin-top:10px;border:2px solid #d8d0ef;border-radius:12px;background:white;font:inherit;color:var(--ink)}.answer-row{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{padding:14px;background:#eeeaff;border:2px solid #d8d0ef;border-radius:14px;font-weight:800;color:var(--ink)}.grammar-prompt{grid-column:1/-1;text-align:center;font-size:1.2rem}.grammar-prompt>div{font-size:3rem}#board:has(.grammar-prompt){grid-template-columns:repeat(2,1fr)}.parent-help{margin:0 0 30px;background:white;border-radius:20px;padding:25px;line-height:1.6}.parent-help summary{cursor:pointer;font-weight:800}dl{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}dl div{background:#f5f2fc;border-radius:12px;padding:12px}dt{font-weight:800}dd{margin:0;color:#625e79}@media(max-width:760px){.game-grid{grid-template-columns:1fr}}@media(max-width:500px){#board{grid-template-columns:repeat(2,1fr)}dl{grid-template-columns:1fr}}
+
+.word-guide{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0;list-style:none}.word-guide li{background:#f5f2fc;border-radius:12px;padding:12px;font-weight:700}@media(max-width:500px){.word-guide{grid-template-columns:1fr}}
+
+.lesson-folder{border:3px solid white;border-radius:28px;box-shadow:0 9px 0 #ded9ce;padding:25px;align-self:start}.lesson-folder summary{cursor:pointer;display:flex;flex-direction:column;gap:14px;list-style:none}.lesson-folder summary::-webkit-details-marker{display:none}.lesson-folder strong{font-size:1.65rem}.folder-count{font-weight:700;color:#5143a8}.folder-games{display:grid;gap:12px;margin-top:22px}.folder-game{padding:16px;text-align:left;border:2px solid #d8d0ef;border-radius:14px;background:white;color:var(--ink)}.folder-game span{display:block;font-weight:800;font-size:1.1rem}.folder-game small{display:block;margin-top:5px}#resultForm{margin:20px 0;padding:22px;background:#e1f4e7;border-radius:18px}#resultForm input{display:block;width:100%;font:inherit;padding:12px;border:2px solid #a5cbb0;border-radius:10px;margin:10px 0}#resultForm button{padding:13px 18px;border:0;border-radius:12px;background:var(--purple);color:white;font-weight:800}footer a{color:#5143a8}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;background:white}th,td{text-align:left;padding:14px;border-bottom:1px solid #ddd}th{background:#eeeaff}.teacher-note{line-height:1.6}
+
+.picture-image{width:64px;height:64px;object-fit:contain}.answer{display:flex;align-items:center;justify-content:center;min-height:90px}.answer-row{grid-template-columns:repeat(2,1fr)}.word-guide li{display:flex;align-items:center;gap:12px}.word-guide .picture-image{width:42px;height:42px}.grammar-prompt .picture-image{display:inline-block;vertical-align:middle}@media(max-width:500px){.answer-row{grid-template-columns:repeat(2,1fr)}.picture-image{width:52px;height:52px}}
+
+#board.missing-board{grid-template-columns:repeat(3,1fr)}
+</style><style>.gift-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:25px 0}.gift-actions button,.gift-card,#giftLookup button,.certificate-actions button{border:0;border-radius:14px;padding:15px 22px;background:#6655c7;color:white;font:inherit;font-weight:800;cursor:pointer}#giftsDialog{width:min(800px,94vw)}#giftLookup{display:grid;gap:10px;margin:20px 0}#giftLookup input,#giftLookup select{width:100%;padding:12px;border:2px solid #d8d0ef;border-radius:10px;font:inherit;margin:0}#giftLookup button{justify-self:start}#giftList{display:flex;gap:15px;flex-wrap:wrap;margin:20px 0}.gift-card{min-height:115px;background:#fff0be;color:#5143a8;font-size:1.3rem;border:2px solid #e8c45e}.certificate{text-align:center;border:7px double #c79832;border-radius:12px;padding:30px 20px;background:#fffdf5}.certificate .seal{font-size:3rem}.certificate h3{font-size:clamp(1.5rem,4vw,2.3rem);color:#6655c7;margin:12px}.certificate-name{font-size:clamp(1.6rem,5vw,2.8rem);font-weight:900;overflow-wrap:anywhere}.certificate-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}.confetti{position:fixed;inset:0;pointer-events:none;z-index:10000;overflow:hidden}.confetti i{position:absolute;left:var(--x);top:-20px;width:10px;height:17px;animation:confetti-fall 2.8s var(--delay) ease-in forwards}@keyframes confetti-fall{to{transform:translateY(105vh) rotate(var(--spin))}}@media print{body>*{display:none!important}#giftsDialog{display:block!important;position:static;max-height:none;width:100%;box-shadow:none;padding:0}#giftsDialog>*{display:none!important}#giftsDialog #certificate{display:block!important}#certificate .certificate-actions{display:none!important}dialog::backdrop{background:none}}
+
+#giftsDialog{max-height:92vh;overflow:auto;border:0;border-radius:26px;padding:28px;background:#fffaf1;color:#252352;font-family:Nunito,system-ui,sans-serif;box-shadow:0 20px 80px #25235244}#giftsDialog::backdrop{background:#25235299}#giftsDialog .dialog-top{display:flex;justify-content:space-between;align-items:center;gap:15px}#closeGifts{border:0;border-radius:50%;width:44px;height:44px;font-size:1.2rem;cursor:pointer}.gift-actions button:focus-visible,.gift-card:focus-visible,#giftsDialog button:focus-visible{outline:3px solid #c79832;outline-offset:4px}[hidden]{display:none!important}
+</style></head>
+<body><div class="test-banner" style="background:#fff0be;padding:16px;text-align:center"><strong>CP GIFT TEST · Practice data stays in this browser. Nothing is sent to your live results.</strong><p>Finish every Unit 1 exercise using the same name and class. Open Test teacher results, click Open test results, then Send gift. Return to the games and Check my gifts.</p><button type="button" id="showTestTeacher">Test teacher results</button> <button type="button" id="showTestGames">Back to games</button></div><div id="studentSurface"><nav class="top-nav" aria-label="Main navigation"><a class="logo" href="./"><span>CP</span> Games</a><a class="nav-home active" href="./">Home</a></nav>
+<main class="hub"><header class="hero"><p class="eyebrow">Mrs. Reem’s English class</p><h1>Let’s learn by <span>playing!</span></h1></header>
+<div class="gift-actions"><button type="button" data-gifts="gifts">Check my gifts 🎁</button><button type="button" data-gifts="certificates">My certificates 🏅</button></div><details class="parent-help"><summary>Word Guide</summary><p>Read the English words together and practise saying them aloud.</p><div id="vocabulary"></div></details>
+
+<section class="game-grid" aria-label="Lesson games"><details class="lesson-folder memory"><summary><span class="art" aria-hidden="true">🎒</span><strong>School supplies</strong><span class="folder-count">2 games · Open folder</span></summary><div class="folder-games"><button class="folder-game" data-game="memory" data-lesson="supplies"><span>Picture pairs</span><small>Find 5 pairs from 10 cards.</small></button><button class="folder-game" data-game="missing" data-lesson="supplies"><span>What’s missing?</span><small>Look at 6 pictures, then choose from 2 pictures.</small></button></div></details><details class="lesson-folder matching"><summary><span class="art" aria-hidden="true">🌅</span><strong>My daily routine</strong><span class="folder-count">2 games · Open folder</span></summary><div class="folder-games"><button class="folder-game" data-game="memory" data-lesson="routine"><span>Picture pairs</span><small>Find 5 pairs from 10 cards.</small></button><button class="folder-game" data-game="missing" data-lesson="routine"><span>What’s missing?</span><small>Look at 6 pictures, then choose from 2 pictures.</small></button></div></details><button class="game-card grammar" data-game="grammar"><span class="art" aria-hidden="true">✏️ ✏️</span><strong>There is / There are</strong><span>Choose a sentence for one or several objects.</span><b>Let’s play →</b></button></section></main><footer>No timer • Try again as often as you like • Learn together · <a href="teacher.html">Teacher results</a></footer>
+<dialog id="gameDialog" aria-labelledby="gameTitle"><div class="dialog-top"><span class="logo">Let’s play!</span><button id="closeGame" aria-label="Close game">✕</button></div><h2 id="gameTitle"></h2><p id="instructions"></p><div id="board"></div><p id="feedback" role="status" aria-live="polite"></p><form id="resultForm" hidden><h3>Well done! Send your result</h3><p id="resultSummary"></p><label for="studentName">Student’s name</label><input id="studentName" name="student_name" type="text" maxlength="100" autocomplete="off" required><label for="classSection">Class section</label><select id="classSection" name="class_section" required><option value="">Choose your section</option><option>CP C</option><option>CP F</option></select><button type="submit">Submit result</button><p id="saveStatus" role="status" aria-live="polite"></p></form><div class="actions"><button id="nextRound" hidden>Hide a picture →</button><button id="restart">Start again ↻</button></div></dialog>
+<dialog id="giftsDialog" aria-labelledby="giftsTitle"><div class="dialog-top"><h2 id="giftsTitle">Check my gifts 🎁</h2><button id="closeGifts" aria-label="Close gifts">✕</button></div><form id="giftLookup"><label for="giftName">Your name</label><input id="giftName" name="gift_name" maxlength="100" autocomplete="off" required><label for="giftSection">Your class</label><select id="giftSection" name="gift_section" required><option value="">Choose your class</option><option>CP C</option><option>CP F</option></select><button type="submit">Check →</button></form><p id="giftStatus" role="status" aria-live="polite"></p><div id="giftList"></div><section id="certificate" class="certificate" hidden><div class="seal" aria-hidden="true">🏅 ⭐ 🏅</div><h3 id="certificateHeading" tabindex="-1">Certificate of achievement</h3><p>Awarded to</p><p id="certificateName" class="certificate-name"></p><h3>Congratulations!</h3><p>You completed all <strong>Unit 1 games!</strong></p><p>CP · Unit 1</p><p>With love from <strong>Mrs. Reem</strong> 💜</p><p id="certificateDate"></p><div class="certificate-actions"><button id="collectionFromGift">My certificates 🏅</button><button id="printCertificate">Print / Save as PDF</button></div></section></dialog></div><main class="game-page" id="testTeacher" hidden>
+  <a class="home-link" href="index.html">← CP Homepage</a>
+  <section class="game-panel" aria-labelledby="teacher-title">
+    <header class="game-header"><h1 id="teacher-title">Teacher Results</h1></header>
+    <div class="teacher-content">
+      <form class="teacher-form" id="teacher-login">
+        <h2>Teacher sign-in</h2>
+        
+        <input id="teacher-email" type="email" value="test@example.com" hidden>
+        
+        <input id="teacher-password" type="password" value="demo" hidden><p>Practice dashboard. No teacher password needed.</p>
+        <button class="primary-button" type="submit">Open test results</button>
+      </form>
+      <p id="teacher-status" class="teacher-status" role="status" aria-live="polite"></p>
+      <div id="teacher-results" hidden>
+        <p>Scores count completed pairs or questions, including retries. Dates use Qatar time (UTC+03:00).</p>
+        <div class="teacher-toolbar">
+          <button class="secondary-button" id="refresh-results" type="button">Refresh results</button>
+          <button class="primary-button" id="download-csv" type="button" disabled>Download CSV</button>
+          <button class="secondary-button" id="sign-out" type="button">Sign out</button>
+        </div>
+        <section><h2>Unit 1 gifts 🎁</h2><div id="gift-students"></div></section><p id="gift-teacher-status" role="status" aria-live="polite"></p><div id="section-results"></div>
+      </div>
+    </div>
+  </section>
+</main><style>[hidden] { display: none !important; }
+.completion-form, .teacher-form { width: min(480px, 100%); margin: 28px auto; padding: 22px; border: 2px solid #d8dff1; border-radius: 18px; text-align: left; }
+.completion-form h3 { margin-top: 0; }
+.completion-form label, .teacher-form label { display: block; margin: 15px 0 6px; font-weight: 800; }
+input, select { width: 100%; min-height: 46px; padding: 10px; font: inherit; border: 2px solid #9a8bce; border-radius: 8px; }
+input:focus-visible, select:focus-visible { outline: 3px solid #f6c936; outline-offset: 2px; }
+.completion-form button, .teacher-form button { margin-top: 20px; }
+.results .completion-form p, .score-note, .submission-status { font-size: 1rem; margin: 12px 0; }
+button:disabled { cursor: default; opacity: .65; }
+.teacher-content { padding: 24px; }
+.teacher-toolbar { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+th, td { padding: 12px; border-bottom: 1px solid #d8dff1; text-align: left; }
+th { background: #f0ecff; }
+.teacher-status { min-height: 24px; }
+
+
+.game-page{max-width:1100px;padding:28px 24px;margin:auto}.game-panel{margin-top:24px;border:1px solid #cbdcea;border-radius:22px;background:white;overflow:hidden}.game-header{max-width:none;height:auto;padding:24px;background:#edf7ff}.game-header h1{margin:0}.primary-button,.secondary-button{min-height:48px;padding:12px 20px;border-radius:10px;font:inherit;cursor:pointer}.primary-button{background:#216456;color:white;border:0}.secondary-button{background:#edf7ff;color:#19334a;border:1px solid #abc5d8}
+
+.gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}.gift-student span{font-weight:800}
+
+.teacher-gift{display:inline-flex;margin-left:12px;align-items:center;font-weight:700}.send-gift{border:0;background:#6655c7;color:white;font:inherit;font-weight:800;border-radius:12px;padding:10px 15px;cursor:pointer}.gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}
+</style><script>window.GiftConfig = {
+  "level": "CP",
+  "sections": [
+    "CP C",
+    "CP F"
+  ],
+  "allSections": [
+    "CP C",
+    "CP F",
+    "CE2 A",
+    "CE2 D",
+    "CM1 A",
+    "CM1 D"
+  ],
+  "catalog": {
+    "CP": [
+      {
+        "game": "School supplies",
+        "exercise": "Picture pairs"
+      },
+      {
+        "game": "School supplies",
+        "exercise": "What’s missing?"
+      },
+      {
+        "game": "My daily routine",
+        "exercise": "Picture pairs"
+      },
+      {
+        "game": "My daily routine",
+        "exercise": "What’s missing?"
+      },
+      {
+        "game": "There is / There are",
+        "exercise": "Choose the sentence"
+      }
+    ],
+    "CE2": [
+      {
+        "game": "Rhyming Words",
+        "exercise": "Rhyming words"
+      },
+      {
+        "game": "Rhyming Words",
+        "exercise": "Picture clues"
+      },
+      {
+        "game": "Imperative Verbs",
+        "exercise": "Sort sentences"
+      },
+      {
+        "game": "Imperative Verbs",
+        "exercise": "Choose a sentence"
+      },
+      {
+        "game": "Feelings",
+        "exercise": "Picture matching"
+      },
+      {
+        "game": "Feelings",
+        "exercise": "Build a sentence"
+      },
+      {
+        "game": "Feelings",
+        "exercise": "Sentences and situations"
+      },
+      {
+        "game": "Verb to Be",
+        "exercise": "affirmative"
+      },
+      {
+        "game": "Verb to Be",
+        "exercise": "negative"
+      },
+      {
+        "game": "Verb to Be",
+        "exercise": "interrogative"
+      },
+      {
+        "game": "Verb to Be",
+        "exercise": "mixed"
+      }
+    ],
+    "CM1": [
+      {
+        "game": "CM1 · Capitalization and Punctuation",
+        "exercise": "Capitalize and Punctuate"
+      },
+      {
+        "game": "CM1 · Capitalization and Punctuation",
+        "exercise": "Full Stop or Question Mark?"
+      },
+      {
+        "game": "CM1 · London Landmarks",
+        "exercise": "Guess the Landmark"
+      },
+      {
+        "game": "CM1 · London Landmarks",
+        "exercise": "Who or What Am I?"
+      },
+      {
+        "game": "CM1 · London Landmarks",
+        "exercise": "Match the Landmark"
+      },
+      {
+        "game": "CM1 · Family Tree",
+        "exercise": "Family Tree Quiz"
+      },
+      {
+        "game": "CM1 · Family Tree",
+        "exercise": "Choose the Relationship"
+      },
+      {
+        "game": "CM1 · Subject Pronouns",
+        "exercise": "Replace the Subject"
+      },
+      {
+        "game": "CM1 · Subject Pronouns",
+        "exercise": "Pronoun Challenge"
+      },
+      {
+        "game": "CM1 · Object Pronouns",
+        "exercise": "Replace the Object"
+      },
+      {
+        "game": "CM1 · Object Pronouns",
+        "exercise": "Subject or Object Pronoun?"
+      },
+      {
+        "game": "CM1 · Verb to Be",
+        "exercise": "Am / Is / Are"
+      },
+      {
+        "game": "CM1 · Verb to Be",
+        "exercise": "Make It Negative"
+      },
+      {
+        "game": "CM1 · Verb to Be",
+        "exercise": "Make a Question"
+      },
+      {
+        "game": "CM1 · Prepositions of Place",
+        "exercise": "Where is it?"
+      },
+      {
+        "game": "CM1 · Prepositions of Place",
+        "exercise": "Choose the Correct Sentence"
+      }
+    ]
+  }
+};
+
+window.UnitProgress = (() => {
+ const normalize=name=>String(name).trim().replace(/\s+/g,' ').toLowerCase();
+ const key=(name,section)=>JSON.stringify([normalize(name),section]);
+ const requiredFor=section=>GiftConfig.catalog[section.split(' ')[0]]||[];
+ function students(rows){const groups=new Map();for(const row of rows){if(!GiftConfig.allSections.includes(row.class_section))continue;const id=key(row.student_name,row.class_section);if(!groups.has(id))groups.set(id,{name:row.student_name.trim(),section:row.class_section,completed:new Set(),required:requiredFor(row.class_section)});const student=groups.get(id);const index=student.required.findIndex(r=>row.game===r.game&&row.exercise===r.exercise);if(index>=0&&Number(row.total)>0&&Number(row.score)>=0)student.completed.add(index);}return [...groups.values()].map(s=>({...s,count:s.completed.size,total:s.required.length,eligible:s.required.length>0&&s.completed.size===s.required.length}));}
+ return {normalize,key,requiredFor,students};
+})();
+
+window.ResultsAPI=(()=>{
+ const store='school-gift-test-oct2026-v2',teacherId='eb3a0fce-6c14-48df-bdd5-0b1bcdbee4c9';
+ function read(){return JSON.parse(localStorage.getItem(store)||'{"results":[],"gifts":[]}');}
+ function save(data){localStorage.setItem(store,JSON.stringify(data));}
+ function auth(){return {access_token:'demo',refresh_token:'demo',expires_in:3600,user:{id:teacherId}};}
+ return {teacherId,async submit(record){const d=read();if(!d.results.some(r=>r.id===record.id))d.results.push({...record,completed_at:new Date().toISOString()});save(d);},async signIn(){read();return auth();},async refresh(){return auth();},async signOut(){},async results(){return read().results;},async teacherGifts(){return read().gifts;},async sendGift(name,section){const d=read();const eligible=UnitProgress.students(d.results).find(s=>UnitProgress.key(s.name,s.section)===UnitProgress.key(name,section)&&s.eligible);if(!eligible)throw new Error('Incomplete');let gift=d.gifts.find(g=>UnitProgress.key(g.student_name,g.class_section)===UnitProgress.key(name,section));if(!gift){gift={id:crypto.randomUUID(),student_name:eligible.name,class_section:section,class_level:section.split(' ')[0],unit_id:'unit-1',awarded_at:new Date().toISOString(),opened_at:null};d.gifts.push(gift);save(d);}return gift;},async gifts(name,section){return read().gifts.filter(g=>g.class_level===GiftConfig.level&&UnitProgress.key(g.student_name,g.class_section)===UnitProgress.key(name,section));},async openGift(name,section,id){const d=read();const g=d.gifts.find(g=>g.id===id&&g.class_level===GiftConfig.level&&UnitProgress.key(g.student_name,g.class_section)===UnitProgress.key(name,section));if(!g)throw new Error('Unknown gift');g.opened_at||=new Date().toISOString();save(d);return g;}};
+})();
+
+window.CompletionResult = (() => {
+ const form=document.querySelector('#resultForm'),status=document.querySelector('#saveStatus');
+ const controls=[...form.querySelectorAll('input,select,button')];
+ let completion=null,record=null,saved=false,generation=0,pending=null;
+ function reset(){generation++;completion=null;record=null;saved=false;pending=null;form.reset();form.hidden=true;status.textContent='';form.elements.student_name.setCustomValidity('');controls.forEach(c=>c.disabled=false);}
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();if(!completion||pending!==null||saved)return;
+  const name=form.elements.student_name.value.trim();const section=form.elements.class_section.value;
+  if(!name){form.elements.student_name.setCustomValidity('Please enter your name.');form.elements.student_name.reportValidity();return;}
+  if(!['CP C','CP F'].includes(section)){form.elements.class_section.reportValidity();return;}
+  record ||= {...completion,student_name:name,class_section:section};
+  const submitted=record,run=generation;pending=run;
+  controls.forEach(c=>c.disabled=true);status.textContent='Sending… Please wait.';
+  try{await ResultsAPI.submit(submitted);if(run===generation&&record===submitted){saved=true;status.textContent='Practice result saved in this browser!';}}
+  catch{if(run===generation&&record===submitted){status.textContent='Your result could not be confirmed. Check your connection and press Submit result to retry.';form.querySelector('button').disabled=false;}}
+  finally{if(pending===run)pending=null;}
+ });
+ form.elements.student_name.addEventListener('input',()=>form.elements.student_name.setCustomValidity(''));
+ return {reset,show(game,exercise,score,total){reset();completion={id:crypto.randomUUID(),game,exercise,score,total};form.hidden=false;}};
+})();
+
+const lessons = {
+  supplies: {label:'School supplies', items:[
+    ['pen','🖊️'],['ruler','📏'],['sharpener','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj48cGF0aCBkPSJNMTggMzAgODMgMTUgMTA1IDM2IDQwIDUyWiIgZmlsbD0iI2JjZTRmNiIgc3Ryb2tlPSIjMzI0ODVmIiBzdHJva2Utd2lkdGg9IjQiLz48cGF0aCBkPSJNMTggMzB2NDhsMjIgMTVWNTJaIiBmaWxsPSIjNGI5ZmM5IiBzdHJva2U9IiMzMjQ4NWYiIHN0cm9rZS13aWR0aD0iNCIvPjxwYXRoIGQ9Im00MCA1MiA2NS0xNnY0NEw0MCA5M1oiIGZpbGw9IiM3MmMzZTciIHN0cm9rZT0iIzMyNDg1ZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGVsbGlwc2UgY3g9IjY5IiBjeT0iNjYiIHJ4PSIxNSIgcnk9IjEzIiBmaWxsPSIjMjYzNzQ5Ii8+PHBhdGggZD0ibTM0IDMwIDQ1LTEwIDkgOS00NCAxMloiIGZpbGw9IiNlZGYwZjIiIHN0cm9rZT0iIzY2Nzc4OCIgc3Ryb2tlLXdpZHRoPSIzIi8+PGNpcmNsZSBjeD0iNjEiIGN5PSIzMCIgcj0iNCIgZmlsbD0iIzY2Nzc4OCIvPjxwYXRoIGQ9Im01NyA2NSA0My03IDcgOS00NCA3WiIgZmlsbD0iI2ZmZDI2NyIgc3Ryb2tlPSIjNzI1NDNkIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJtNTcgNjUtMTEgNyAxNyAyWiIgZmlsbD0iI2Q5YWQ3YyIvPjxwYXRoIGQ9Im00NiA3MiA1LTMgMSA0WiIgZmlsbD0iIzI2Mzc0OSIvPjwvc3ZnPg=='],['school bag','🎒'],['coloring pencil','🖍️'],['folder','📁'],['pencil','✏️'],['eraser','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj48cGF0aCBkPSJtMTcgNTMgNTgtMzAgMzAgMTgtNTggMzJaIiBmaWxsPSIjZmZiNmNhIiBzdHJva2U9IiM2ODQ0NWUiIHN0cm9rZS13aWR0aD0iNCIvPjxwYXRoIGQ9Ik0xNyA1M3YyMmwzMCAxOVY3M1oiIGZpbGw9IiNkZjc3OWQiIHN0cm9rZT0iIzY4NDQ1ZSIgc3Ryb2tlLXdpZHRoPSI0Ii8+PHBhdGggZD0ibTQ3IDczIDU4LTMydjIzTDQ3IDk0WiIgZmlsbD0iI2YzOTRiMyIgc3Ryb2tlPSIjNjg0NDVlIiBzdHJva2Utd2lkdGg9IjQiLz48cGF0aCBkPSJtNTAgMzYgMjkgMTctMzMgMTgtMjktMThaIiBmaWxsPSIjZTllNGZkIi8+PHBhdGggZD0ibTE3IDUzIDI5IDE4djIyTDE3IDc1WiIgZmlsbD0iI2FmYTNlNCIvPjxwYXRoIGQ9Im00NiA3MSAzMy0xOHYyM0w0NiA5M1oiIGZpbGw9IiNjYmJmZjEiLz48L3N2Zz4='],['glue stick','🧴'],['pencil case','👝'],['crayon','🖍️'],['scissors','✂️']]},
+  routine: {label:'My daily routine', items:[
+    ['I wake up.','🌅'],['I wash my face.','💧'],['I brush my teeth.','🪥'],['I get dressed.','👕'],['I have breakfast.','🥣'],['I go to school.','🏫'],['I come back home.','🏠'],['I have lunch.','🥪'],['I do my homework.','📚'],['I play with my friends.','⚽'],['I take a shower.','🚿'],['I have dinner.','🍽️'],['I go to bed.','🛏️'],['I comb my hair.','💇']]}
+};
+const dialog=document.querySelector('#gameDialog'),board=document.querySelector('#board'),feedback=document.querySelector('#feedback'),next=document.querySelector('#nextRound');
+let attempts=0,firstTry=0,roundWrong=false,completed=false;
+let mode,lessonKey,items,selection=[],matched=0,locked=false,timer,round=0,missing,phase,displayItems=[];
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function tile(html,action,cls=''){const b=document.createElement('button');b.type='button';b.className='tile '+cls;b.innerHTML=html;b.addEventListener('click',()=>action(b));board.append(b);return b;}
+function iconMarkup(icon){return (icon.endsWith('.svg')||icon.startsWith('data:image/'))?`<img class="picture-image" src="${icon}" alt="">`:`<span class="symbol" aria-hidden="true">${icon}</span>`;}
+function picture(item,words=false){return `${iconMarkup(item[1])}${words?`<span class="picture-word">${item[0]}</span>`:''}`;}
+function totalRounds(){return mode==='grammar'?grammarItems.length:items.length;}
+function start(){attempts=0;firstTry=0;roundWrong=false;completed=false;CompletionResult.reset();document.querySelector("#instructions").hidden=false;clearTimeout(timer);selection=[];matched=0;locked=false;round=0;feedback.textContent='';board.replaceChildren();next.hidden=true;
+ board.classList.toggle('missing-board',mode==='missing');const key=lessonKey;items=shuffle(lessons[key].items).slice(0,mode==='memory'?5:6);
+ document.querySelector('#gameTitle').textContent=mode==='grammar'?'There is / There are':lessons[key].label;
+ document.querySelector('#instructions').textContent={memory:'Flip two cards to find a pair.',missing:'Look at the pictures. When you’re ready, hide one!',grammar:'Choose the sentence for one or several objects.'}[mode];
+ if(mode==='memory')pairs();else if(mode==='missing')look();else grammar();
+}
+function pairs(){const deck=shuffle(items.flatMap((item,id)=>[{item,id},{item,id}]));
+ for(const card of deck){const face=picture(card.item);const b=tile('★',()=>choose(b,card,face));b.setAttribute('aria-label','Hidden card');}}
+function choose(b,card,face){if(locked||b.disabled||selection.some(s=>s.b===b))return;
+ b.innerHTML=face;b.setAttribute('aria-label',card.item[0]);b.classList.add('selected');selection.push({b,card});if(selection.length<2)return;attempts++;
+ if(selection[0].card.id===card.id){selection.forEach(s=>{s.b.classList.remove('selected');s.b.classList.add('matched');s.b.disabled=true;});selection=[];matched++;feedback.textContent=matched===items.length?'🌟 All pairs found! Well done!':`Great match! ${matched} / ${items.length}`;if(matched===items.length)finish();}
+ else{locked=true;feedback.textContent='Try again!';timer=setTimeout(()=>{selection.forEach(s=>{s.b.classList.remove('selected');s.b.textContent='★';s.b.setAttribute('aria-label','Hidden card');});selection=[];locked=false;},1300);}}
+function look(){roundWrong=false;board.replaceChildren();feedback.textContent='';phase='look';displayItems=shuffle(items);displayItems.forEach(i=>tile(picture(i),()=>{}).disabled=true);next.textContent='Hide a picture →';next.hidden=false;}
+function distractorFor(item){
+ const groups=lessonKey==='supplies'?
+ [['pen','pencil','coloring pencil','crayon'],['sharpener','eraser'],['school bag','pencil case','folder'],['ruler','scissors','glue stick']]:
+ [['I wake up.','I go to bed.'],['I wash my face.','I take a shower.','I brush my teeth.','I comb my hair.'],['I have breakfast.','I have lunch.','I have dinner.'],['I go to school.','I come back home.'],['I do my homework.','I play with my friends.','I get dressed.']];
+ const group=groups.find(g=>g.includes(item[0]))||[];
+ const candidates=lessons[lessonKey].items.filter(i=>i!==item&&i[1]!==item[1]);
+ const related=candidates.filter(i=>group.includes(i[0]));
+ return shuffle(related.length?related:candidates)[0];
+}
+function hide(){missing=items[round];board.replaceChildren();displayItems.forEach(i=>tile(i===missing?'❔':picture(i),()=>{}).disabled=true);const choices=document.createElement('div');choices.className='answer-row';board.append(choices);shuffle([missing,distractorFor(missing)]).forEach(i=>{const b=document.createElement('button');b.className='answer';b.innerHTML=picture(i);b.setAttribute('aria-label',i[0]);choices.append(b);b.onclick=()=>{attempts++;if(i!==missing){roundWrong=true;feedback.textContent='Try again!';return;}if(!roundWrong)firstTry++;choices.querySelectorAll('button').forEach(x=>x.disabled=true);feedback.textContent=`🌟 ${missing[0]}!`;phase='solved';if(round===totalRounds()-1){finish();return;}next.textContent='Next round →';next.hidden=false;};});phase='guess';next.hidden=true;}
+const grammarItems=[['pencil','pencils','✏️',1],['ruler','rulers','📏',2],['sharpener','sharpeners','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTAwIj48cGF0aCBkPSJNMTggMzAgODMgMTUgMTA1IDM2IDQwIDUyWiIgZmlsbD0iI2JjZTRmNiIgc3Ryb2tlPSIjMzI0ODVmIiBzdHJva2Utd2lkdGg9IjQiLz48cGF0aCBkPSJNMTggMzB2NDhsMjIgMTVWNTJaIiBmaWxsPSIjNGI5ZmM5IiBzdHJva2U9IiMzMjQ4NWYiIHN0cm9rZS13aWR0aD0iNCIvPjxwYXRoIGQ9Im00MCA1MiA2NS0xNnY0NEw0MCA5M1oiIGZpbGw9IiM3MmMzZTciIHN0cm9rZT0iIzMyNDg1ZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGVsbGlwc2UgY3g9IjY5IiBjeT0iNjYiIHJ4PSIxNSIgcnk9IjEzIiBmaWxsPSIjMjYzNzQ5Ii8+PHBhdGggZD0ibTM0IDMwIDQ1LTEwIDkgOS00NCAxMloiIGZpbGw9IiNlZGYwZjIiIHN0cm9rZT0iIzY2Nzc4OCIgc3Ryb2tlLXdpZHRoPSIzIi8+PGNpcmNsZSBjeD0iNjEiIGN5PSIzMCIgcj0iNCIgZmlsbD0iIzY2Nzc4OCIvPjxwYXRoIGQ9Im01NyA2NSA0My03IDcgOS00NCA3WiIgZmlsbD0iI2ZmZDI2NyIgc3Ryb2tlPSIjNzI1NDNkIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJtNTcgNjUtMTEgNyAxNyAyWiIgZmlsbD0iI2Q5YWQ3YyIvPjxwYXRoIGQ9Im00NiA3MiA1LTMgMSA0WiIgZmlsbD0iIzI2Mzc0OSIvPjwvc3ZnPg==',4],['pencil','pencils','✏️',3]];
+function grammar(){
+ roundWrong=false;board.replaceChildren();next.hidden=true;
+ const [one,many,icon,n]=grammarItems[round];
+ const prompt=document.createElement('div');prompt.className='grammar-prompt';
+ prompt.innerHTML=`<div aria-hidden="true">${Array(n).fill(iconMarkup(icon)).join(' ')}</div><p>${n} ${n===1?one:many}</p>`;board.append(prompt);
+ ['There is','There are'].forEach(choice=>{
+  const ending=n===1?`a ${one}.`:`${n} ${many}.`;
+  tile(`${choice} ${ending}`,b=>{
+   attempts++;if(choice!==(n===1?'There is':'There are')){roundWrong=true;feedback.textContent='Try again! One object: There is. More than one: There are.';return;}
+   if(!roundWrong)firstTry++;board.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('matched');
+   feedback.textContent=`🌟 ${choice} ${ending}`;phase='grammar';next.hidden=false;
+   if(round===totalRounds()-1){finish();return;}next.textContent='Next →';
+  },'word');
+ });
+}
+next.onclick=()=>{if(mode==='grammar'){if(round===totalRounds()-1)start();else{round++;feedback.textContent='';grammar();}}else if(phase==='look')hide();else{if(round===totalRounds()-1)start();else{round++;look();}}};
+document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{mode=b.dataset.game;lessonKey=b.dataset.lesson||'supplies';start();dialog.showModal();});
+document.querySelector('#closeGame').onclick=()=>dialog.close();dialog.addEventListener('close',()=>{clearTimeout(timer);CompletionResult.reset();});document.querySelector('#restart').onclick=start;const vocab=document.querySelector('#vocabulary');
+Object.values(lessons).forEach(lesson=>{
+ const section=document.createElement('section');const title=document.createElement('h3');title.textContent=lesson.label;section.append(title);
+ const list=document.createElement('ul');list.className='word-guide';
+ lesson.items.forEach(([en,icon])=>{const row=document.createElement('li');row.innerHTML=picture([en,icon],true);list.append(row);});
+ section.append(list);vocab.append(section);
+});
+
+function finish(){
+ completed=true;next.hidden=true;document.querySelector('#instructions').hidden=true;
+ const total=totalRounds();
+ const summary=mode==='memory'?`You found all ${total} pairs in ${attempts} turns.`:`You completed all ${total} rounds. First-try answers: ${firstTry} / ${total}.`;
+ document.querySelector('#resultSummary').textContent=summary;
+ CompletionResult.show(document.querySelector('#gameTitle').textContent,{memory:'Picture pairs',missing:'What’s missing?',grammar:'Choose the sentence'}[mode],total,total);
+ document.querySelector('#studentName').focus();
+}
+
+(() => {
+ const dialog=document.querySelector('#giftsDialog'),form=document.querySelector('#giftLookup'),status=document.querySelector('#giftStatus'),list=document.querySelector('#giftList'),certificate=document.querySelector('#certificate');
+ let mode='gifts',identity=null,awards=[],generation=0;
+ function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const layer=document.createElement('div');layer.className='confetti';layer.setAttribute('aria-hidden','true');for(let i=0;i<65;i++){const bit=document.createElement('i');bit.style.setProperty('--x',Math.random()*100+'vw');bit.style.setProperty('--delay',Math.random()*.5+'s');bit.style.setProperty('--spin',Math.random()*720+'deg');bit.style.background=['#ffd55b','#6655c7','#df6d42','#46b890','#ed89b6'][i%5];layer.append(bit);}dialog.append(layer);setTimeout(()=>layer.remove(),3500);}
+ function render(){list.replaceChildren();certificate.hidden=true;const available=awards.filter(a=>mode==='gifts'?!a.opened_at:!!a.opened_at);status.textContent=available.length?(mode==='gifts'?'🎁 Gift from Mrs. Reem! Click your gift to open it.':'Your certificate collection'):(mode==='gifts'?'No new gifts yet. Any gift from Mrs. Reem will appear here.':'Your certificates will appear here after you open a gift.');for(const award of available){const b=document.createElement('button');b.className='gift-card';b.textContent=mode==='gifts'?'🎁 Open your Unit 1 gift':'🏅 Unit 1 certificate';b.onclick=async()=>{const run=generation;b.disabled=true;try{let current=award;if(!award.opened_at){current=await ResultsAPI.openGift(identity.name,identity.section,award.id);if(run!==generation)return;awards=awards.map(a=>a.id===current.id?current:a);}showCertificate(current);}catch{if(run===generation){status.textContent='Could not open your gift. Please try again.';b.disabled=false;}}};list.append(b);}}
+ function showCertificate(award){list.replaceChildren();status.textContent='';certificate.hidden=false;document.querySelector('#certificateName').textContent=award.student_name;document.querySelector('#certificateDate').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Qatar',dateStyle:'long'}).format(new Date(award.awarded_at));document.querySelector('#certificateHeading').focus();}
+ document.querySelectorAll('[data-gifts]').forEach(b=>b.onclick=()=>{generation++;mode=b.dataset.gifts;identity=null;awards=[];form.reset();form.querySelector('button').disabled=false;form.hidden=false;list.replaceChildren();certificate.hidden=true;status.textContent='';document.querySelector('#giftsTitle').textContent=mode==='gifts'?'Check my gifts 🎁':'My certificates 🏅';dialog.showModal();});
+ document.querySelector('#closeGifts').onclick=()=>dialog.close();dialog.addEventListener('close',()=>{dialog.querySelectorAll('.confetti').forEach(x=>x.remove());generation++;identity=null;awards=[];form.reset();list.replaceChildren();certificate.hidden=true;status.textContent='';});
+ form.onsubmit=async event=>{event.preventDefault();const name=form.elements.gift_name.value.trim().replace(/\s+/g,' '),section=form.elements.gift_section.value;if(!name){form.elements.gift_name.setCustomValidity('Please enter your name.');form.elements.gift_name.reportValidity();return;}const run=++generation;const b=form.querySelector('button');b.disabled=true;status.textContent='Checking…';list.replaceChildren();certificate.hidden=true;try{const loaded=await ResultsAPI.gifts(name,section);if(run!==generation)return;identity={name,section};awards=loaded;render();if(mode==='gifts'&&awards.some(a=>!a.opened_at))confetti();}catch{if(run===generation)status.textContent='Could not check gifts. Please try again.';}finally{if(run===generation)b.disabled=false;}};
+ form.elements.gift_name.oninput=()=>form.elements.gift_name.setCustomValidity('');
+ document.querySelector('#collectionFromGift').onclick=()=>{mode='certificates';document.querySelector('#giftsTitle').textContent='My certificates 🏅';render();};
+ document.querySelector('#printCertificate').onclick=()=>window.print();
+})();
+
+window.TeacherGifts=(()=>{
+ let awards=[],available=false,generation=0;
+ const status=()=>document.querySelector('#gift-teacher-status');
+ function clear(){generation++;awards=[];available=false;if(status())status().textContent='';}
+ async function load(token){const run=++generation;available=false;try{const data=await ResultsAPI.teacherGifts(token);if(run!==generation)return;awards=data;available=true;status().textContent='';}catch{if(run!==generation)return;awards=[];status().textContent='Gift service unavailable. The certificate database may still need setup.';}}
+ function button(name,section,rows,getToken){const student=UnitProgress.students(rows).find(s=>UnitProgress.key(s.name,s.section)===UnitProgress.key(name,section));if(!student?.eligible)return null;
+ const holder=document.createElement('span');holder.className='teacher-gift';
+ const award=awards.find(a=>UnitProgress.key(a.student_name,a.class_section)===UnitProgress.key(name,section));
+ if(award){holder.textContent=award.opened_at?'🏅 Certificate collected':'🎁 Gift sent';return holder;}
+ const b=document.createElement('button');b.type='button';b.className='send-gift';b.textContent='Send gift 🎁';b.disabled=!available;holder.append(b);
+ b.onclick=async event=>{event.preventDefault();event.stopPropagation();const run=generation;b.disabled=true;status().textContent='Sending gift…';try{const token=await getToken();if(run!==generation||!token)return;const sent=await ResultsAPI.sendGift(name,section,token);if(run!==generation)return;awards.push(sent);holder.textContent='🎁 Gift sent';status().textContent=`Gift sent to ${name}!`;}
+ catch{if(run===generation){b.disabled=false;status().textContent='Could not send the gift. Refresh results and try again.';}}};return holder;}
+ function renderList(rows,getToken){const list=document.querySelector('#gift-students');list.replaceChildren();for(const student of UnitProgress.students(rows)){const row=document.createElement('div');row.className='gift-student';const label=document.createElement('span');label.textContent=`${student.name} · ${student.section} · ${student.count} / ${student.total} games`;row.append(label);const action=button(student.name,student.section,rows,getToken);if(action)row.append(action);list.append(row);}}
+ return {load,clear,button,renderList};
+})();
+
+(() => {
+  const login = document.querySelector('#teacher-login');
+  const view = document.querySelector('#teacher-results');
+  const status = document.querySelector('#teacher-status');
+  const sections = document.querySelector('#section-results');
+  const download = document.querySelector('#download-csv');
+  const refresh = document.querySelector('#refresh-results');
+  let session = null; // Kept in memory; closing/reloading this page requires sign-in.
+  let rows = [];
+  let generation = 0;
+  const collator = new Intl.Collator('en', { sensitivity: 'base', numeric: true });
+  const dateFormat = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Qatar', dateStyle: 'medium', timeStyle: 'medium',
+  });
+  function clear() {
+    generation++;
+    session = null;
+    rows = [];
+    sections.replaceChildren();
+    TeacherGifts.clear();
+    document.querySelector('#gift-students')?.replaceChildren();
+    download.disabled = true;
+    view.hidden = true;
+    login.hidden = false;
+    login.reset();
+  }
+  async function giftToken(){if(!session)return null;const run=generation;if(session.expires_at<=Date.now()/1000+60){const renewed=await ResultsAPI.refresh(session.refresh_token);if(run!==generation)return null;if(renewed.user?.id!==ResultsAPI.teacherId)throw new Error('Sign in again');session={...renewed,expires_at:Date.now()/1000+renewed.expires_in};}return session.access_token;}
+  function render() {
+    TeacherGifts.renderList(rows,giftToken);
+    sections.replaceChildren();
+    for (const section of ['CP C', 'CP F']) {
+      const group = rows.filter(row => row.class_section === section);
+      const heading = document.createElement('h2');
+      heading.textContent = `${section} (${group.length} submissions)`;
+      sections.append(heading);
+      if (!group.length) {
+        const empty = document.createElement('p');
+        empty.textContent = 'No submissions yet.';
+        sections.append(empty);
+        continue;
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'table-wrap';
+      const table = document.createElement('table');
+      const caption = document.createElement('caption');
+      caption.textContent = `${section} student results`;
+      table.append(caption);
+      const head = document.createElement('thead');
+      const header = document.createElement('tr');
+      for (const label of ['Student name', 'Game', 'Exercise', 'Score', 'Completed (UTC+03:00)']) {
+        const th = document.createElement('th');
+        th.scope = 'col';
+        th.textContent = label;
+        header.append(th);
+      }
+      head.append(header);
+      table.append(head);
+      const body = document.createElement('tbody');
+      for (const row of group) {
+        const tr = document.createElement('tr');
+        for (const value of [row.student_name, row.game, row.exercise, `${row.score} / ${row.total}`, dateFormat.format(new Date(row.completed_at))]) {
+          const td = document.createElement('td');
+          td.textContent = value;
+          tr.append(td);
+        }
+        body.append(tr);
+      }
+      table.append(body);
+      wrap.append(table);
+      sections.append(wrap);
+    }
+    download.disabled = !rows.length;
+  }
+  async function load() {
+    if (!session) return;
+    const run = ++generation;
+    refresh.disabled = true;
+    download.disabled = true;
+    status.textContent = 'Loading results…';
+    try {
+      if (session.expires_at <= Date.now() / 1000 + 60) {
+        const renewed = await ResultsAPI.refresh(session.refresh_token);
+        if (run !== generation) return;
+        if (renewed.user?.id !== ResultsAPI.teacherId) throw Object.assign(new Error(), { status: 401 });
+        session = { ...renewed, expires_at: Date.now() / 1000 + renewed.expires_in };
+      }
+      const loaded = await ResultsAPI.results(session.access_token);
+      if (run !== generation) return;
+      rows = loaded.filter(row => ['CP C', 'CP F'].includes(row.class_section)).sort((a, b) => collator.compare(a.class_section, b.class_section) || collator.compare(a.student_name, b.student_name) || a.completed_at.localeCompare(b.completed_at));
+      await TeacherGifts.load(session.access_token);
+      if(run!==generation)return;
+      render();
+      status.textContent = `${rows.length} submissions loaded.`;
+    } catch (error) {
+      if (run !== generation) return;
+      if (error.status === 401 || error.status === 403) {
+        clear();
+        status.textContent = 'Your session ended or access was denied. Please sign in again.';
+      } else {
+        rows = [];TeacherGifts.clear();
+        document.querySelector('#gift-students')?.replaceChildren();
+        sections.replaceChildren();
+        status.textContent = 'Could not load results. Check your connection and press Refresh results.';
+      }
+    } finally {
+      refresh.disabled = false;
+    }
+  }
+  login.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = login.querySelector('button');
+    button.disabled = true;
+    status.textContent = 'Signing in…';
+    try {
+      const auth = await ResultsAPI.signIn(document.querySelector('#teacher-email').value.trim(), document.querySelector('#teacher-password').value);
+      if (auth.user?.id !== ResultsAPI.teacherId) {
+        await ResultsAPI.signOut(auth.access_token).catch(() => {});
+        throw new Error('Unauthorized account');
+      }
+      session = { ...auth, expires_at: Date.now() / 1000 + auth.expires_in };
+      login.reset();
+      login.hidden = true;
+      view.hidden = false;
+      await load();
+    } catch {
+      status.textContent = 'Sign-in failed. Check your teacher email and password, then try again.';
+      document.querySelector('#teacher-password').value = '';
+    } finally {
+      button.disabled = false;
+    }
+  });
+  refresh.addEventListener('click', load);
+  document.querySelector('#sign-out').addEventListener('click', () => {
+    const token = session?.access_token;
+    clear();
+    status.textContent = 'Signed out.';
+    if (token) ResultsAPI.signOut(token).catch(() => {});
+    document.querySelector('#teacher-email').focus();
+  });
+  function cell(value) {
+    let text = String(value);
+    if (/^[\s\uFEFF]*[=+@-]/u.test(text)) text = "'" + text;
+    return '"' + text.replaceAll('"', '""') + '"';
+  }
+  download.addEventListener('click', () => {
+    if (!session || !rows.length) return;
+    const lines = [['Student name', 'Class section', 'Game', 'Exercise', 'Score', 'Total', 'Completed at (UTC)'],
+      ...rows.map(row => [row.student_name, row.class_section, row.game, row.exercise, row.score, row.total, new Date(row.completed_at).toISOString()])];
+    const blob = new Blob(['\uFEFF' + lines.map(line => line.map(cell).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'cp-student-results.csv';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+})();
+
+
+
+function testTeacher(){document.querySelector('#studentSurface').hidden=true;document.querySelector('#testTeacher').hidden=false;}
+ function testHome(){document.querySelector('#studentSurface').hidden=false;document.querySelector('#testTeacher').hidden=true;}
+ document.querySelector('#showTestTeacher').onclick=testTeacher;document.querySelector('#showTestGames').onclick=testHome;
+ document.querySelectorAll('a[href="teacher.html"]').forEach(a=>a.onclick=e=>{e.preventDefault();testTeacher();});
+ document.querySelectorAll('#testTeacher a[href="index.html"]').forEach(a=>a.onclick=e=>{e.preventDefault();testHome();});
+ document.querySelectorAll('a[href="./"]').forEach(a=>a.onclick=e=>{e.preventDefault();testHome();});</script></body></html>

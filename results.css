@@ -17,3 +17,7 @@ th { background: #f0ecff; }
 
 
 .game-page{max-width:1100px;padding:28px 24px;margin:auto}.game-panel{margin-top:24px;border:1px solid #cbdcea;border-radius:22px;background:white;overflow:hidden}.game-header{max-width:none;height:auto;padding:24px;background:#edf7ff}.game-header h1{margin:0}.primary-button,.secondary-button{min-height:48px;padding:12px 20px;border-radius:10px;font:inherit;cursor:pointer}.primary-button{background:#216456;color:white;border:0}.secondary-button{background:#edf7ff;color:#19334a;border:1px solid #abc5d8}
+
+.gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}.gift-student span{font-weight:800}
+
+.teacher-gift{display:inline-flex;margin-left:12px;align-items:center;font-weight:700}.send-gift{border:0;background:#6655c7;color:white;font:inherit;font-weight:800;border-radius:12px;padding:10px 15px;cursor:pointer}.gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}
