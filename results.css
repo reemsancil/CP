@@ -21,3 +21,13 @@ th { background: #f0ecff; }
 .gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}.gift-student span{font-weight:800}
 
 .teacher-gift{display:inline-flex;margin-left:12px;align-items:center;font-weight:700}.send-gift{border:0;background:#6655c7;color:white;font:inherit;font-weight:800;border-radius:12px;padding:10px 15px;cursor:pointer}.gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}
+
+.student-list { list-style: none; margin: 0 0 28px; padding: 0; }
+.student-results { border-bottom: 1px solid #d8dff1; }
+.student-results summary { padding: 12px; cursor: pointer; font-weight: 700; text-align: left; overflow-wrap: anywhere; }
+.student-results summary:hover { background: #f0ecff; }
+.student-results summary:focus-visible { outline: 3px solid #9a8bce; outline-offset: -3px; }
+.student-results[open] summary { background: #f0ecff; }
+.student-results .table-wrap { padding: 12px; }
+.student-results table { margin-bottom: 0; }
+.all-games-completed { display: inline-block; margin-left: 10px; color: #18733b; font-style: italic; font-weight: 500; }

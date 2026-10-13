@@ -43,7 +43,7 @@
           <button class="primary-button" id="download-csv" type="button" disabled>Download CSV</button>
           <button class="secondary-button" id="sign-out" type="button">Sign out</button>
         </div>
-        <section><h2>Unit 1 gifts 🎁</h2><div id="gift-students"></div></section><p id="gift-teacher-status" role="status" aria-live="polite"></p><div id="section-results"></div>
+        <p id="gift-teacher-status" role="status" aria-live="polite"></p><div id="section-results"></div>
       </div>
     </div>
   </section>
@@ -70,6 +70,16 @@ th { background: #f0ecff; }
 .gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}.gift-student span{font-weight:800}
 
 .teacher-gift{display:inline-flex;margin-left:12px;align-items:center;font-weight:700}.send-gift{border:0;background:#6655c7;color:white;font:inherit;font-weight:800;border-radius:12px;padding:10px 15px;cursor:pointer}.gift-student{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-bottom:1px solid #ddd}
+
+.student-list { list-style: none; margin: 0 0 28px; padding: 0; }
+.student-results { border-bottom: 1px solid #d8dff1; }
+.student-results summary { padding: 12px; cursor: pointer; font-weight: 700; text-align: left; overflow-wrap: anywhere; }
+.student-results summary:hover { background: #f0ecff; }
+.student-results summary:focus-visible { outline: 3px solid #9a8bce; outline-offset: -3px; }
+.student-results[open] summary { background: #f0ecff; }
+.student-results .table-wrap { padding: 12px; }
+.student-results table { margin-bottom: 0; }
+.all-games-completed { display: inline-block; margin-left: 10px; color: #18733b; font-style: italic; font-weight: 500; }
 </style><script>window.GiftConfig = {
   "level": "CP",
   "sections": [
@@ -389,12 +399,11 @@ window.TeacherGifts=(()=>{
   }
   async function giftToken(){if(!session)return null;const run=generation;if(session.expires_at<=Date.now()/1000+60){const renewed=await ResultsAPI.refresh(session.refresh_token);if(run!==generation)return null;if(renewed.user?.id!==ResultsAPI.teacherId)throw new Error('Sign in again');session={...renewed,expires_at:Date.now()/1000+renewed.expires_in};}return session.access_token;}
   function render() {
-    TeacherGifts.renderList(rows,giftToken);
     sections.replaceChildren();
     for (const section of ['CP C', 'CP F']) {
       const group = rows.filter(row => row.class_section === section);
       const heading = document.createElement('h2');
-      heading.textContent = `${section} (${group.length} submissions)`;
+      heading.textContent = section;
       sections.append(heading);
       if (!group.length) {
         const empty = document.createElement('p');
@@ -402,35 +411,61 @@ window.TeacherGifts=(()=>{
         sections.append(empty);
         continue;
       }
-      const wrap = document.createElement('div');
-      wrap.className = 'table-wrap';
-      const table = document.createElement('table');
-      const caption = document.createElement('caption');
-      caption.textContent = `${section} student results`;
-      table.append(caption);
-      const head = document.createElement('thead');
-      const header = document.createElement('tr');
-      for (const label of ['Student name', 'Game', 'Exercise', 'Score', 'Completed (UTC+03:00)']) {
-        const th = document.createElement('th');
-        th.scope = 'col';
-        th.textContent = label;
-        header.append(th);
-      }
-      head.append(header);
-      table.append(head);
-      const body = document.createElement('tbody');
+      const students = new Map();
       for (const row of group) {
-        const tr = document.createElement('tr');
-        for (const value of [row.student_name, row.game, row.exercise, `${row.score} / ${row.total}`, dateFormat.format(new Date(row.completed_at))]) {
-          const td = document.createElement('td');
-          td.textContent = value;
-          tr.append(td);
-        }
-        body.append(tr);
+        const known=[...students.keys()].find(name=>UnitProgress.normalize(name)===UnitProgress.normalize(row.student_name));
+        const name=known||row.student_name.trim();if(!students.has(name))students.set(name,[]);students.get(name).push(row);
       }
-      table.append(body);
-      wrap.append(table);
-      sections.append(wrap);
+      const list = document.createElement('ul');
+      list.className = 'student-list';
+      for (const [studentName, attempts] of students) {
+        const item = document.createElement('li');
+        const details = document.createElement('details');
+        details.className = 'student-results';
+        const summary = document.createElement('summary');
+        summary.textContent = studentName;
+        const finishedAll = UnitProgress.students(attempts)[0]?.eligible;
+        if (finishedAll) {
+          const completion = document.createElement('em');
+          completion.className = 'all-games-completed';
+          completion.textContent = 'Completed all games';
+          summary.append(' ', completion);
+        }
+        const gift=TeacherGifts.button(studentName,section,rows,giftToken);if(gift)summary.append(' ',gift);
+        details.append(summary);
+        const wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        const table = document.createElement('table');
+        const caption = document.createElement('caption');
+        caption.textContent = `${studentName} · ${section} results`;
+        table.append(caption);
+        const head = document.createElement('thead');
+        const header = document.createElement('tr');
+        for (const label of ['Game', 'Exercise', 'Score', 'Completed (UTC+03:00)']) {
+          const th = document.createElement('th');
+          th.scope = 'col';
+          th.textContent = label;
+          header.append(th);
+        }
+        head.append(header);
+        table.append(head);
+        const body = document.createElement('tbody');
+        for (const row of attempts) {
+          const tr = document.createElement('tr');
+          for (const value of [row.game, row.exercise, `${row.score} / ${row.total}`, dateFormat.format(new Date(row.completed_at))]) {
+            const td = document.createElement('td');
+            td.textContent = value;
+            tr.append(td);
+          }
+          body.append(tr);
+        }
+        table.append(body);
+        wrap.append(table);
+        details.append(wrap);
+        item.append(details);
+        list.append(item);
+      }
+      sections.append(list);
     }
     download.disabled = !rows.length;
   }

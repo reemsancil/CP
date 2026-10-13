@@ -26,12 +26,11 @@
   }
   async function giftToken(){if(!session)return null;const run=generation;if(session.expires_at<=Date.now()/1000+60){const renewed=await ResultsAPI.refresh(session.refresh_token);if(run!==generation)return null;if(renewed.user?.id!==ResultsAPI.teacherId)throw new Error('Sign in again');session={...renewed,expires_at:Date.now()/1000+renewed.expires_in};}return session.access_token;}
   function render() {
-    TeacherGifts.renderList(rows,giftToken);
     sections.replaceChildren();
     for (const section of ['CP C', 'CP F']) {
       const group = rows.filter(row => row.class_section === section);
       const heading = document.createElement('h2');
-      heading.textContent = `${section} (${group.length} submissions)`;
+      heading.textContent = section;
       sections.append(heading);
       if (!group.length) {
         const empty = document.createElement('p');
@@ -39,35 +38,61 @@
         sections.append(empty);
         continue;
       }
-      const wrap = document.createElement('div');
-      wrap.className = 'table-wrap';
-      const table = document.createElement('table');
-      const caption = document.createElement('caption');
-      caption.textContent = `${section} student results`;
-      table.append(caption);
-      const head = document.createElement('thead');
-      const header = document.createElement('tr');
-      for (const label of ['Student name', 'Game', 'Exercise', 'Score', 'Completed (UTC+03:00)']) {
-        const th = document.createElement('th');
-        th.scope = 'col';
-        th.textContent = label;
-        header.append(th);
-      }
-      head.append(header);
-      table.append(head);
-      const body = document.createElement('tbody');
+      const students = new Map();
       for (const row of group) {
-        const tr = document.createElement('tr');
-        for (const value of [row.student_name, row.game, row.exercise, `${row.score} / ${row.total}`, dateFormat.format(new Date(row.completed_at))]) {
-          const td = document.createElement('td');
-          td.textContent = value;
-          tr.append(td);
-        }
-        body.append(tr);
+        const known=[...students.keys()].find(name=>UnitProgress.normalize(name)===UnitProgress.normalize(row.student_name));
+        const name=known||row.student_name.trim();if(!students.has(name))students.set(name,[]);students.get(name).push(row);
       }
-      table.append(body);
-      wrap.append(table);
-      sections.append(wrap);
+      const list = document.createElement('ul');
+      list.className = 'student-list';
+      for (const [studentName, attempts] of students) {
+        const item = document.createElement('li');
+        const details = document.createElement('details');
+        details.className = 'student-results';
+        const summary = document.createElement('summary');
+        summary.textContent = studentName;
+        const finishedAll = UnitProgress.students(attempts)[0]?.eligible;
+        if (finishedAll) {
+          const completion = document.createElement('em');
+          completion.className = 'all-games-completed';
+          completion.textContent = 'Completed all games';
+          summary.append(' ', completion);
+        }
+        const gift=TeacherGifts.button(studentName,section,rows,giftToken);if(gift)summary.append(' ',gift);
+        details.append(summary);
+        const wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        const table = document.createElement('table');
+        const caption = document.createElement('caption');
+        caption.textContent = `${studentName} · ${section} results`;
+        table.append(caption);
+        const head = document.createElement('thead');
+        const header = document.createElement('tr');
+        for (const label of ['Game', 'Exercise', 'Score', 'Completed (UTC+03:00)']) {
+          const th = document.createElement('th');
+          th.scope = 'col';
+          th.textContent = label;
+          header.append(th);
+        }
+        head.append(header);
+        table.append(head);
+        const body = document.createElement('tbody');
+        for (const row of attempts) {
+          const tr = document.createElement('tr');
+          for (const value of [row.game, row.exercise, `${row.score} / ${row.total}`, dateFormat.format(new Date(row.completed_at))]) {
+            const td = document.createElement('td');
+            td.textContent = value;
+            tr.append(td);
+          }
+          body.append(tr);
+        }
+        table.append(body);
+        wrap.append(table);
+        details.append(wrap);
+        item.append(details);
+        list.append(item);
+      }
+      sections.append(list);
     }
     download.disabled = !rows.length;
   }
